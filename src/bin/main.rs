@@ -372,6 +372,10 @@ fn run_whir_pcs<F, MerkleConfig>(
 
     let mut merlin = io.to_merlin();
 
+    // TODO:
+    // 1. multiple nodes in one Merkle tree leaf
+    // 2. first-round proving&verification about Merkle trees
+
     println!("=========================================");
     println!("Whir (PCS) 🌪️");
     println!("Field: {:?} and MT: {:?}", args.field, args.merkle_tree);
@@ -417,10 +421,11 @@ fn run_whir_pcs<F, MerkleConfig>(
     );
 
     // Just not to count that initial inversion (which could be precomputed)
+    // Just not trust it
+    let whir_verifier_time = Instant::now();
     let verifier = Verifier::new(params);
 
     HashCounter::reset();
-    let whir_verifier_time = Instant::now();
     for _ in 0..reps {
         let mut arthur = io.to_arthur(merlin.transcript());
         verifier.verify(&mut arthur, &statement, &proof).unwrap();

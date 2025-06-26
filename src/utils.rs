@@ -89,6 +89,7 @@ mod tests {
 
     use super::{is_power_of_two, stack_evaluations, to_binary};
 
+    // Split the vector *evals* into *evals.len / fold_size* parts
     #[test]
     fn test_evaluations_stack() {
         use crate::crypto::fields::Field64 as F;
